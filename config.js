@@ -1,10 +1,10 @@
 var config = {
 	database: {
-		host:	  'localhost', 	// database host
-		user: 	  'root', 		// your database username
-		password: 'root', 		// your database password
-		port: 	  3306, 		// default MySQL port
-		db: 	  'test' 		// your database name
+		host: process.env.DB_HOST, 	// database host
+		user: process.env.DB_USER, 		// your database username
+		password: process.env.DB_PASSWORD, 		// your database password
+		port: 3306, 		// default MySQL port
+		db: process.env.DB_NAME 		// your database name
 	},
 	server: {
 		host: '127.0.0.1',
