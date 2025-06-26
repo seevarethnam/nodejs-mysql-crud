@@ -109,6 +109,18 @@ app.use(flash())
 app.use('/', index)
 app.use('/users', users)
 
-app.listen(3000, function(){
-	console.log('Server running at port 3000: http://127.0.0.1:3000')
-})
+// Check DB connection on startup
+var connection = mysql.createConnection(dbOptions);
+connection.connect(function(err) {
+    if (err) {
+        console.error('❌ Error connecting to the database:', err.message);
+        process.exit(1); // exit the app if DB connection fails
+    } else {
+        console.log('✅ Database connected successfully.');
+
+        // Start server only if DB is connected
+        app.listen(3000, function() {
+            console.log('Server running at port 3000: http://127.0.0.1:3000');
+        });
+    }
+});
