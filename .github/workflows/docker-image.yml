@@ -1,0 +1,21 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build & Push Docker Image
+      run: |
+        docker build -t . --file Dockerfile --tag ${{ secrets.REGISTRY }}/symbiosis-app:${{ github.sha }}
+        echo ${{ secrets.REGISTRY_PW }} | docker login ${{ secrets.REGISTRY }} -u ${{ secrets.REGISTRY_USER }} --password-stdin
+        docker push ${{ secrets.REGISTRY }}/symbiosis-app:${{ github.sha }}
