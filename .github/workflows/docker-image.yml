@@ -14,8 +14,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Set Short SHA
+      run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
     - name: Build & Push Docker Image
       run: |
-        docker build -t seevarethnam/symbiosis-app:${{ github.sha }} . 
+        docker build -t seevarethnam/symbiosis-app:$SHORT_SHA . 
         echo ${{ secrets.REGISTRY_PW }} | docker login -u ${{ secrets.REGISTRY_USER }} --password-stdin
-        docker push seevarethnam/symbiosis-app:${{ github.sha }}
+        docker push seevarethnam/symbiosis-app:$SHORT_SHA
