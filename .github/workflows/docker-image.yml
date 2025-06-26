@@ -16,6 +16,6 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build & Push Docker Image
       run: |
-        docker build -t . --file Dockerfile --tag ${{ secrets.REGISTRY }}/symbiosis-app:${{ github.sha }}
+        docker build -t ${{ secrets.REGISTRY }}/symbiosis-app:${{ github.sha }} .
         echo ${{ secrets.REGISTRY_PW }} | docker login ${{ secrets.REGISTRY }} -u ${{ secrets.REGISTRY_USER }} --password-stdin
         docker push ${{ secrets.REGISTRY }}/symbiosis-app:${{ github.sha }}
